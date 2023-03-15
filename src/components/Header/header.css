@@ -1,4 +1,4 @@
-nav{
+nav {
     background: #e2e2e2;
     position: static;
     height: 6rem;
@@ -7,13 +7,13 @@ nav{
     align-items: center;
 }
 
-.header_wrapper{
+.header_wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.header_title{
+.header_title {
     margin-left: 10px;
     font-size: 30px;
     display: flex;
@@ -21,33 +21,67 @@ nav{
     margin-right: 100px;
 }
 
-.header_title:hover{
-    color:rgb(36, 36, 113) ;
+.header_title:hover {
+    color: rgb(36, 36, 113);
 }
 
-.login_title{
+.login_title {
     font-size: 25px;
     font-weight: bold;
     color: rgba(115, 114, 114, 0.951);
     margin-right: 90px;
 }
 
-.signup_title{
+.signup_title {
     font-size: 25px;
     font-weight: bold;
     color: rgba(115, 114, 114, 0.951);
 }
 
-.login_title:hover{
+.login_title:hover {
     color: rgb(51, 51, 184);
 }
 
-.signup_title:hover{
+.signup_title:hover {
     color: rgb(51, 51, 184);
 }
 
-.icon_bookmark{
+.icon_bookmark {
     color: rgb(51, 51, 184);
     transform: scale(1.5);
     margin-right: 10px;
+}
+
+.logout_btn {
+    position: absolute;
+    right: 120px;
+
+    height: 2.7rem;
+    width: 6.3rem;
+
+    color: rgb(58, 48, 138);
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 5px;
+    border-color: #ccc;
+    background-color: rgb(235, 235, 235);
+}
+
+.logout_btn:hover {
+    border-color: cornflowerblue;
+    background-color: rgb(97, 92, 136);
+    color: #fff;
+}
+
+.user_email{
+    font-size: 23px;
+    font-weight: bold;
+    color: rgb(0, 83, 132);
+}
+
+.email{
+    color: rgb(71, 66, 114);
+    margin-left: 10px;
+    font-size: 21px;
+
 }

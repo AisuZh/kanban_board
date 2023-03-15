@@ -32,8 +32,6 @@ const Login = () => {
                 <section className='login'>
                     <div className='container'>
                         <div className='login_wrapper'>
-                            {/* <p className='login-title'> Log In </p>                        */}
-
                             <form>
                                 <div>
                                     <label htmlFor="email-address" className='label'>

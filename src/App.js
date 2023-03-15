@@ -3,7 +3,6 @@ import LoginPage from "./pages/LoginPage";
 import BoardPage from "./pages/BoardPage";
 import Header from "./components/Header/Header";
 import SignUpPage from "./pages/SignUpPage";
-// import Home from "./components/Login/Home";
 
 
 const App = () => {
