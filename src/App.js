@@ -3,19 +3,34 @@ import LoginPage from "./pages/LoginPage";
 import BoardPage from "./pages/BoardPage";
 import Header from "./components/Header/Header";
 import SignUpPage from "./pages/SignUpPage";
+import { AuthContextProvider } from "./components/context/AuthContext";
+import ProtectedRoute from "./utils/PrivateRoutes";
 
 
 const App = () => {
   return (
+    <AuthContextProvider>
       <Router>
-        <Header/>
+        <Header />
         <Routes>
-          <Route element={<BoardPage/>} path="/kanban"/>
-          <Route element={<LoginPage />} path="/login"/>
-          <Route element={<SignUpPage />} path="/signup"/>
+          <Route
+            path='/kanban'
+            element={
+              <ProtectedRoute>
+                <BoardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route element={<LoginPage />} path="/login" />
+          <Route element={<SignUpPage />} path="/signup" />
         </Routes>
       </Router>
+    </AuthContextProvider>
   );
 }
 
 export default App;
+
+
+
+
