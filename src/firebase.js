@@ -137,30 +137,6 @@ export const AuthContextProvider = (props) => {
   const [user, setUser] = useState();
   const [error, setError] = useState();
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, async (user) => {
-  //     setUser(user);
-
-  //     // Create a new sub-collection for the user if they're authenticated
-  //     if (user) {
-  //       const userId = user.uid;
-  //       const userRef = doc(collection(db, 'lists'), userId);
-
-  //       try {
-  //         // Check if the sub-collection already exists
-  //         const userDoc = await getDoc(userRef);
-  //         if (!userDoc.exists()) {
-  //           // If it doesn't exist, create it
-  //           await setDoc(userRef, {});
-  //         }
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     }
-  //   }, setError);
-
-  //   return () => unsubscribe();
-  // }, []);
 
   return <AuthContext.Provider value={{ user, error }} {...props} />;
 };

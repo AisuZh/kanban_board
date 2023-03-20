@@ -267,12 +267,13 @@ const Board = () => {
           }))
         })
       } else {
+        
         console.log("user is logged out")
       }
     });
   }, [])
 
-  const addMoreCard = async (title, listId) => {
+  const addMoreCard = async (title, listId, modal) => {
     if (!title) {
       return
     }
@@ -281,6 +282,10 @@ const Board = () => {
     const newCard = {
       id: newCardId,
       title,
+      modal: {
+        description: '',
+        deadline: 0
+      }
     }
 
     const listRef = doc(db, `users/${auth.currentUser.uid}/lists`, listId)
@@ -289,6 +294,7 @@ const Board = () => {
       cards: arrayUnion(newCard),
     })
   }
+  
 
   const removeCard = (index, listId, cardId) => {
     const listRef = doc(db, `users/${auth.currentUser.uid}/lists`, listId)
@@ -355,66 +361,90 @@ const Board = () => {
     await deleteDoc(listRef)
   }
 
-  const onDragEnd = (result) => {
-  const { destination, source, draggableId, type } = result;
-  if (!destination) {
-    return
+  const onDragEnd = async (result) => {
+    const { destination, source, type } = result;
+    if (!destination) {
+      return
+    }
+  
+    if (type === 'list') {
+      const newListOrder = Array.from(lists)
+      const [removed] = newListOrder.splice(source.index, 1)
+      newListOrder.splice(destination.index, 0, removed)
+  
+      for (let index = 0; index < newListOrder.length; index++) {
+        const list = newListOrder[index];
+        const listRef = doc(db, `users/${auth.currentUser.uid}/lists`, list.id)
+        await updateDoc(listRef, {
+          position: index
+        })
+      }
+      setLists(newListOrder)
+      return
+    }
+  
+    const sourceList = lists.find(list => list.id === source.droppableId)
+    const destinationList = lists.find(list => list.id === destination.droppableId)
+  
+    if (sourceList === destinationList) {
+      const newCardOrder = Array.from(sourceList.cards)
+      const [removed] = newCardOrder.splice(source.index, 1)
+      newCardOrder.splice(destination.index, 0, removed)
+  
+      const listRef = doc(db, `users/${auth.currentUser.uid}/lists`, sourceList.id)
+      await updateDoc(listRef, {
+        cards: newCardOrder
+      })
+  
+      sourceList.cards = newCardOrder
+    } else {
+      const sourceCardOrder = Array.from(sourceList.cards)
+      const [removed] = sourceCardOrder.splice(source.index, 1)
+  
+      const destinationCardOrder = Array.from(destinationList.cards)
+      destinationCardOrder.splice(destination.index, 0, removed)
+  
+      const sourceListRef = doc(db, `users/${auth.currentUser.uid}/lists`, sourceList.id)
+      await updateDoc(sourceListRef, {
+        cards: sourceCardOrder
+      })
+  
+      const destinationListRef = doc(db, `users/${auth.currentUser.uid}/lists`, destinationList.id)
+      await updateDoc(destinationListRef, {
+        cards: destinationCardOrder
+      })
+  
+      sourceList.cards = sourceCardOrder
+      destinationList.cards = destinationCardOrder
+    }
   }
   
-  if (type === 'list') {
-    const list = lists.splice(source.index, 1)
-    lists.splice(destination.index, 0, ...list)
   
-    setLists([...lists])
-    return
-  }
-  
-  const sourceList = lists.find(list => list.id === source.droppableId)
-  const destinationList = lists.find(list => list.id === destination.droppableId)
-  
-  if (sourceList === destinationList) {
-    const card = sourceList.cards.splice(source.index, 1)
-    sourceList.cards.splice(destination.index, 0, ...card)
-  
-    updateDoc(doc(db, `users/${auth.currentUser.uid}/lists`, sourceList.id), {
-      cards: sourceList.cards
-    })
-  } else {
-    const card = sourceList.cards.splice(source.index, 1)
-    destinationList.cards.splice(destination.index, 0, ...card)
-  
-    updateDoc(doc(db, `users/${auth.currentUser.uid}/lists`, sourceList.id), {
-      cards: sourceList.cards
-    })
-  
-    updateDoc(doc(db, `users/${auth.currentUser.uid}/lists`, destinationList.id), {
-      cards: destinationList.cards
-    })
-  }
+
+  return (
+    <div className='board'>
+    <div className="container">
+      <storeApi.Provider value={{ addMoreCard, removeCard, updateCardTitle, addMoreList, updateListTitle, deleteList }}>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="app" direction="horizontal" type="list">
+            {provided => (
+              <div className="wrapper" {...provided.droppableProps} ref={provided.innerRef}>
+                {lists.map((list, index) => (
+                  <List list={list} key={list.id} index={index} />
+                ))}
+                {provided.placeholder}
+                <InputContainer type="list" onAdd={addMoreList} />
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </storeApi.Provider>
+    </div>
+    </div>
+  )
 }
 
-return (
-<div className="container">
-<storeApi.Provider value={{ addMoreCard, removeCard, updateCardTitle, addMoreList, updateListTitle, deleteList }}>
-<DragDropContext onDragEnd={onDragEnd}>
-<Droppable droppableId="app" direction="horizontal" type="list">
-{provided => (
-<div className="wrapper" {...provided.droppableProps} ref={provided.innerRef}>
-{lists.map((list, index) => (
-<List list={list} key={list.id} index={index} />
-))}
-{provided.placeholder}
-<InputContainer type="list" onAdd={addMoreList} />
-</div>
-)}
-</Droppable>
-</DragDropContext>
-</storeApi.Provider>
-</div>
-)
-}
-
-export default Board;      
+export default Board;
 
 
 
@@ -423,9 +453,24 @@ export default Board;
 
 
 
+// cardsArray: (3) [{…}, {…}, {…}]
+// 0: 
+// id: "c9dd1133-3a78-4eea-858a-7d9f7530159d"
+// modal: {description: ''}
+// title:"d"
+// [[Prototype]]: Object
 
-
-
+// 1: 
+// id: "b9db655b-e312-4ddd-aff0-34f8cf3b19bf"
+// modal: {description: ''}
+// title: "f"
+// [[Prototype]]: Object
+// 2: 
+// id: "066db545-b3c6-4b76-9890-454028b1ecd7"
+// modal: {description: ''}
+// title: "ddd"
+// [[Prototype]]: Object
+// length: 3
 
 
 

@@ -2,7 +2,6 @@ nav {
     background: #e2e2e2;
     position: static;
     height: 6rem;
-    margin-bottom: 2rem;
     display: flex;
     align-items: center;
 }
@@ -14,11 +13,11 @@ nav {
 }
 
 .header_title {
-    margin-left: 10px;
+    margin-left: 96px;
     font-size: 30px;
     display: flex;
     align-items: center;
-    margin-right: 100px;
+    margin-right: 40px;
 }
 
 .header_title:hover {
@@ -82,6 +81,6 @@ nav {
 .email{
     color: rgb(71, 66, 114);
     margin-left: 10px;
-    font-size: 21px;
+    font-size: 23px;
 
 }

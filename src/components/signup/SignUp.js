@@ -7,13 +7,13 @@
 
 // const SignUp = () => {
 //     const navigate = useNavigate();
- 
+
 //     const [email, setEmail] = useState('')
 //     const [password, setPassword] = useState('');
- 
+
 //     const onSubmit = async (e) => {
 //       e.preventDefault()
-     
+
 //       await createUserWithEmailAndPassword(auth, email, password)
 //         .then((userCredential) => {
 //             // Signed in
@@ -28,10 +28,10 @@
 //             console.log(errorCode, errorMessage);
 //             // ..
 //         });
- 
-   
+
+
 //     }
- 
+
 //   return (
 //     <main >        
 //         <section>
@@ -69,7 +69,7 @@
 //                                 placeholder="Password"              
 //                             />
 //                         </div>                                             
-                        
+
 //                         <button
 //                         className='signup_btn'
 //                             type="submit" 
@@ -84,15 +84,15 @@
 //                         </NavLink>
 //                     </p>                                   
 //                     </form>
-                   
-                            
+
+
 //                 </div>
 //             </div>
 //         </section>
 //     </main>
 //   )
 // }
- 
+
 // export default SignUp
 
 import React, { useState, useEffect } from 'react';
@@ -126,7 +126,7 @@ const Signup = () => {
 
   useEffect(() => {
     if (error) {
-      alert(error);
+      console.log(error);
     }
   }, [error]);
 
@@ -166,7 +166,10 @@ const Signup = () => {
                   placeholder="Password"
                 />
               </div>
+              {
+                error && <p className='login_error'>{error}</p>
 
+              }
               <button
                 className="signup_btn"
                 type="submit"

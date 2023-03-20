@@ -7,3 +7,8 @@
     overflow-y: auto;
 }
 
+.board {
+    background-image: url(../../assets/bg6.jpg);
+    background-size: cover; /* optional */
+    background-repeat: no-repeat; /* optional */
+  }

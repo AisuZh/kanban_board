@@ -58,7 +58,10 @@ font-size: 18px;
 .signup_helper:hover{
 color: rgb(154, 0, 0);
 font-weight: 500
+}
 
+.login_error{
+    color: rgb(233, 8, 8);
 }
 
 

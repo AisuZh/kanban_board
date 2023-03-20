@@ -20,6 +20,10 @@ const InputCard = ({ setOpen, listId, type }) => {
         setTitle('')
     }
 
+    const handleCloseButtonClick = () => {
+        setOpen(false);
+      };
+
     return (
         <div className='input-card'>
             <div className='input-card-container'>
@@ -41,7 +45,7 @@ const InputCard = ({ setOpen, listId, type }) => {
                         type === 'card' ? 'Add card' : 'Add list'
                     }
                 </button>
-                <button className='button_cancel'>
+                <button className='button_cancel' onClick={handleCloseButtonClick}>
                     <ClearIcon className='icon_delete'/>
                 </button>
             </div>

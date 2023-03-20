@@ -58,10 +58,9 @@ const Header = () => {
 
   return (
     <nav>
-        <div className='container'>
+
             <div className='header_wrapper'>
                 <NavLink to='/kanban' className='header_title'>
-                <BookmarkIcon className='icon_bookmark'/>
                 <h1 className='header_title'>Kanban board</h1>
                 </NavLink>
                 {user ? (
@@ -78,7 +77,7 @@ const Header = () => {
                   </>
                 )}
             </div>
-        </div>
+
     </nav>
   )
 }

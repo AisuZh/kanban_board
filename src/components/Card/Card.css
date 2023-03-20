@@ -1,4 +1,4 @@
-.card-content{
+.card-content {
     min-height: 2.5rem;
 
     display: flex;
@@ -14,7 +14,7 @@
     position: relative;
 }
 
-.card-title-container{
+.card-title-container {
     width: 100%;
     height: 100%;
     display: flex;
@@ -24,18 +24,19 @@
     transition: background-color 0.1s;
 }
 
-.card-title{
+.card-title {
     padding: 0.7rem 0.5rem 0.5rem;
     overflow: hidden;
     word-wrap: break-word;
     max-width: 90%;
+    font-size: 1.1rem;
 }
 
-.card-content:hover{
+.card-content:hover {
     background-color: #cecece1f;
 }
 
-.card_btn{
+.card_btn {
     padding: 0.5rem 0.5rem 00;
 
     border: none;
@@ -43,24 +44,24 @@
     background-color: transparent;
 }
 
-.card_btn:hover{
+.card_btn:hover {
     color: #e22bba;
     background-color: #cecece1f;
 }
 
-.card_svg{
+.card_svg {
     opacity: 0;
     transition: color 0.2s, opacity 0.2s;
 
 }
 
-.card_svg:hover{
-    color:  rgb(179, 21, 97);
+.card_svg:hover {
+    color: rgb(179, 21, 97);
     opacity: 1;
     border: none;
 }
 
-.input-card-title{
+.input-card-title {
     width: 100%;
     height: 100%;
     padding: 0.7rem 0.5rem 0.5rem;
@@ -75,7 +76,113 @@
     transition: border-color 0.2s;
 }
 
-.input-card-title:focus{
+.input-card-title:focus {
     border: 1px solid rgb(179, 21, 97);
 }
 
+.modal-open {
+    border: transparent;
+    font-size: 23px;
+    background-color: #fff;
+    color: rgb(137, 137, 137);
+}
+
+.modal-open:hover {
+    color: #e22bba;
+    background-color: #cecece1f;
+}
+
+.modal_close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: transparent;
+    font-size: 20px;
+    color: black;
+    transform: scale(1);
+}
+
+.modal_title {
+    text-transform: capitalize;
+    margin-top: 20px;
+    margin-left: 50px;
+    font-size: 28px;
+    color: rgb(6, 6, 84);
+    color: black;
+
+}
+
+.modal_descr {
+    margin-left: 50px;
+    margin-top: 30px;
+    font-size: 20px;
+    color: black;
+}
+
+.descr_input {
+    padding: 0.7rem 0.5rem 0.5rem;
+    resize: none;
+    overflow: hidden;
+    border-color: grey;
+    border-radius: 3px;
+    font-size: 18px;
+}
+
+.descr_save {
+    height: 43px;
+    font-size: 18px;
+    color: rgb(99, 99, 109);
+    font-weight: bold;
+    background-color: rgb(250 250 250);
+    border-color: rgb(108, 110, 112);
+    margin-top: 15px;
+
+}
+
+.modal {
+    /* background-image: url(../../assets/bg6.jpg);
+    background-size: cover; /* optional */
+    /* background-repeat: no-repeat;  */
+    background-color:rgb(228 229 232);
+}
+
+.descr_wrapper {
+    margin-left: 50px;
+
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    width: 40%;
+}
+
+.modal_deadline {
+    color: black;
+    font-size: 22px;
+    font-weight: 500px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 50px;
+}
+
+.modal_date {
+    padding: 7px;
+    font-size: 15px;
+}
+
+.task_icon {
+    color: rgb(59, 66, 75);
+    transform: scale(1.5);
+}
+
+.picked_date{
+    font-size: 20px;
+    text-decoration:underline;
+    margin-bottom: 20px;
+
+}
