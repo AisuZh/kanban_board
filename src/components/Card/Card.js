@@ -1,69 +1,3 @@
-// import React, { useContext, useState } from 'react'
-// import { Draggable } from "react-beautiful-dnd";
-// import TextareaAutosize from 'react-textarea-autosize'
-// import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-
-// import './Card.css';
-// import storeApi from '../../utils/storeApi';
-
-// const Card = ({ card, listId, index }) => {
-//     const [open, setOpen] = useState(false)
-//     const [newTitle, setNewTitle] = useState(card.title)
-//     const { removeCard, updateCardTitle } = useContext(storeApi)
-
-//     const handleOnBlur = () => {
-//         updateCardTitle(index, listId, newTitle)
-//         setOpen(!open)
-//     }
-
-//     return (
-//         <Draggable draggableId={card.id} index={index}>
-//             {
-//                 (provided) => (
-//                     <div
-//                         ref={provided.innerRef}
-//                         {...provided.dragHandleProps}
-//                         {...provided.draggableProps}
-//                     >
-//                         <div className='card-content'>
-//                             {open ? (
-//                                 <TextareaAutosize
-//                                     type='text'
-//                                     className='input-card-title'
-//                                     value={newTitle}
-//                                     onChange={(e) => setNewTitle(e.target.value)}
-//                                     onKeyPress={(e) => {
-//                                         if (e.key === 'Enter') {
-//                                             handleOnBlur(card.id)
-//                                         }
-//                                         return
-//                                     }}
-//                                     onBlur={handleOnBlur}
-//                                     autoFocus
-//                                 />
-//                             ) : (
-//                                 <div onClick={() => setOpen((prev) => !prev)}
-//                                     className='card-title-container'>
-//                                     <p className='card-title'>{card.title}</p>
-//                                     <button
-//                                         onClick={() => {
-//                                             removeCard(index, listId, card.id);
-//                                         }} className='card_svg'
-//                                     ><DeleteOutlineIcon className='card_svg' /></button>
-//                                 </div>
-//                             )}
-//                         </div>
-//                     </div>
-//                 )
-//             }
-//         </Draggable>
-//     )
-// }
-
-// export default Card
-
-
-
 import React, { useState, useContext } from 'react';
 import Modal from 'react-modal';
 import { Draggable } from "react-beautiful-dnd";
@@ -72,8 +6,10 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import DatePicker from "react-datepicker";
 import TaskIcon from '@mui/icons-material/Task';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { CheckBoxOutlineBlankOutlined } from '@mui/icons-material';
 import "react-datepicker/dist/react-datepicker.css";
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
+
 import { auth, db } from '../../firebase';
 import './Card.css';
 import storeApi from '../../utils/storeApi';
@@ -202,14 +138,17 @@ const Card = ({ card, listId, index, savedDate }) => {
                                 <div className='wrap'>
                                     <div className='descr_wrapper'>
                                         <TextareaAutosize
+                                        minRows={7}
                                             placeholder='Type...'
                                             className='descr_input'
                                             value={modalText || card.modal.description}
                                             onChange={(e) => setModalText(e.target.value)}
                                         />
                                         <button className='descr_save' onClick={submitModal}>Save</button>
+                                        <CheckBoxOutlineBlankOutlined/>
                                     </div>
                                     <div>
+                                        <div className='date_wrapper'>
                                         <p className='modal_deadline'>Dates:</p>
                                         <p className='picked_date'>{card.modal.deadline}</p>
 
@@ -218,6 +157,7 @@ const Card = ({ card, listId, index, savedDate }) => {
                                             selected={startDate}
                                             onChange={(deadline) => setStartDate(deadline)}
                                         />
+                                    </div>
                                     </div>
                                 </div>
                                 <button className='modal_close' onClick={closeModal}><CancelIcon /></button>

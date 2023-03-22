@@ -140,10 +140,7 @@
 }
 
 .modal {
-    /* background-image: url(../../assets/bg6.jpg);
-    background-size: cover; /* optional */
-    /* background-repeat: no-repeat;  */
-    background-color:rgb(228 229 232);
+    background-color:#ecedef;
 }
 
 .descr_wrapper {
@@ -184,5 +181,17 @@
     font-size: 20px;
     text-decoration:underline;
     margin-bottom: 20px;
+    color: #808083;
 
+}
+
+.date_wrapper{
+    display: flex;
+    background-color: rgb(228 228 228);
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    height: 171px;
+    width: 271px;
+    border-radius: 44px;
 }

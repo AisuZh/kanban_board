@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
-import './Title.css'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import OutsideClickHandler from 'react-outside-click-handler';
-import storeApi from '../../utils/storeApi';
 
+import storeApi from '../../utils/storeApi';
+import './Title.css'
 
 const Title = ({ title, listId }) => {
     const [open, setOpen] = useState(false)
@@ -56,10 +56,8 @@ const Title = ({ title, listId }) => {
                                             setOpen(!open)
                                         }}>
                                             Edit Card Title</li>
-
                                     </ul>
                                 </OutsideClickHandler>
-
                             )
                         }
                     </div>

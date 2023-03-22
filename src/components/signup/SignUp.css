@@ -1,15 +1,15 @@
-.signup_wrapper{
+.signup_wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
     margin-top: 10rem;
 }
 
-.signup_input{
+.signup_input {
     width: 100%;
     height: 3rem;
 
-    background-color:#fff;
+    background-color: #fff;
     padding: 0.5rem;
     font-size: 15px;
     border-bottom: 1px solid #ccc;
@@ -18,7 +18,7 @@
     margin-top: 20px;
 }
 
-.signup_btn{
+.signup_btn {
     width: 30rem;
     height: 3rem;
     margin-top: 10px;
@@ -31,8 +31,8 @@
     background-color: rgb(235, 235, 235);
 }
 
-.signup_btn:hover{
+.signup_btn:hover {
     border-color: cornflowerblue;
     background-color: rgb(97, 92, 136);
     color: #fff;
-    }
+}

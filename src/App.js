@@ -6,14 +6,11 @@ import SignUpPage from "./pages/SignUpPage";
 import { AuthContextProvider } from "./components/context/AuthContext";
 import ProtectedRoute from "./utils/PrivateRoutes";
 import { useEffect } from "react";
+import Pages from "./pages/Pages";
 
 
 const App = () => {
-  // const navigate = useNavigate()
 
-  // useEffect = (() => {
-  //   navigate('/login')
-  // }, [])
   return (
     <AuthContextProvider>
       <Router>
@@ -27,6 +24,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route element={<Pages />} path='/' />
           <Route element={<LoginPage />} path="/login" />
           <Route index element={<SignUpPage />} path="/signup" />
         </Routes>
