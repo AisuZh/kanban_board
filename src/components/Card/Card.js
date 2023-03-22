@@ -6,7 +6,6 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import DatePicker from "react-datepicker";
 import TaskIcon from '@mui/icons-material/Task';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { CheckBoxOutlineBlankOutlined } from '@mui/icons-material';
 import "react-datepicker/dist/react-datepicker.css";
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 
@@ -40,7 +39,7 @@ const Card = ({ card, listId, index, savedDate }) => {
     const { removeCard, updateCardTitle } = useContext(storeApi)
     const [modalIsOpen, setIsOpen] = useState(false);
     const [startDate, setStartDate] = useState(savedDate ? new Date(savedDate.replace(/-/g, '/')) : new Date());  
-      const [modalText, setModalText] = useState('');
+    const [modalText, setModalText] = useState('');
 
     const submitModal = async () => {
         const listRef = doc(db, `users/${auth.currentUser.uid}/lists/${listId}`);
@@ -145,7 +144,6 @@ const Card = ({ card, listId, index, savedDate }) => {
                                             onChange={(e) => setModalText(e.target.value)}
                                         />
                                         <button className='descr_save' onClick={submitModal}>Save</button>
-                                        <CheckBoxOutlineBlankOutlined/>
                                     </div>
                                     <div>
                                         <div className='date_wrapper'>

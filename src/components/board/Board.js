@@ -125,150 +125,72 @@ const Board = () => {
     await deleteDoc(listRef)
   }
 
-  // const onDragEnd = async (result) => {
-  //   const { destination, source, type } = result;
-  //   if (!destination) {
-  //     return;
-  //   }
-  
-  //   if (type === 'list') {
-  //     const newListOrder = Array.from(lists);
-  //     const [removed] = newListOrder.splice(source.index, 1);
-  //     newListOrder.splice(destination.index, 0, removed);
-  
-  //     setLists(newListOrder); // Update state immediately
-  
-  //     // Update database in the background
-  //     const updatePromises = newListOrder.map(async (list, index) => {
-  //       const listRef = doc(db, `users/${auth.currentUser.uid}/lists`, list.id);
-  //       await updateDoc(listRef, {
-  //         position: index
-  //       });
-  //     });
-  //     await Promise.all(updatePromises);
-  //   } else {
-  //     const sourceList = lists.find((list) => list.id === source.droppableId);
-  //     const destinationList = lists.find(
-  //       (list) => list.id === destination.droppableId
-  //     );
-  
-  //     const sourceCardOrder = Array.from(sourceList.cards);
-  //     const [removed] = sourceCardOrder.splice(source.index, 1);
-  //     const destinationCardOrder = Array.from(destinationList.cards);
-  //     destinationCardOrder.splice(destination.index, 0, removed);
-  
-  //     const sourceListRef = doc(
-  //       db,
-  //       `users/${auth.currentUser.uid}/lists`,
-  //       sourceList.id
-  //     );
-  //     const destinationListRef = doc(
-  //       db,
-  //       `users/${auth.currentUser.uid}/lists`,
-  //       destinationList.id
-  //     );
-  
-  //     if (sourceList === destinationList) {
-  //       await updateDoc(sourceListRef, {
-  //         cards: sourceCardOrder
-  //       });
-  //       sourceList.cards = sourceCardOrder;
-  //     } else {
-  //       await Promise.all([
-  //         updateDoc(sourceListRef, {
-  //           cards: sourceCardOrder
-  //         }),
-  //         updateDoc(destinationListRef, {
-  //           cards: destinationCardOrder
-  //         })
-  //       ]);
-  //       sourceList.cards = sourceCardOrder;
-  //       destinationList.cards = destinationCardOrder;
-  //     }
-  
-  //     const newListOrder = [...lists];
-  //     const sourceListIndex = newListOrder.findIndex(
-  //       (list) => list.id === sourceList
-  //     );
-  //     const destinationListIndex = newListOrder.findIndex(
-  //       (list) => list.id === destinationList
-  //     );
-  //     newListOrder[sourceListIndex] = sourceList;
-  //     newListOrder[destinationListIndex] = destinationList;
-  //     setLists(newListOrder);
-  
-  //     console.log({
-  //       'sourceList:': sourceList,
-  //       'desList:': destinationList
-  //     });
-  //   }
-  // }
-
   const onDragEnd = async (result) => {
     const { destination, source, type } = result;
+
     if (!destination) {
       return;
     }
-  
+
     if (type === 'list') {
       const newListOrder = Array.from(lists);
       const [removed] = newListOrder.splice(source.index, 1);
       newListOrder.splice(destination.index, 0, removed);
-  
+
       for (let index = 0; index < newListOrder.length; index++) {
         const list = newListOrder[index];
         const listRef = doc(db, `users/${auth.currentUser.uid}/lists`, list.id);
         await updateDoc(listRef, {
-          position: index
+          position: index,
         });
       }
+
       setLists(newListOrder);
     } else {
-      const sourceList = lists.find(list => list.id === source.droppableId);
-      const destinationList = lists.find(list => list.id === destination.droppableId);
-  
-      const sourceCardOrder = Array.from(sourceList.cards);
-      const [removed] = sourceCardOrder.splice(source.index, 1);
-      const destinationCardOrder = Array.from(destinationList.cards);
-      destinationCardOrder.splice(destination.index, 0, removed);
-  
-      const sourceListRef = doc(db, `users/${auth.currentUser.uid}/lists`, sourceList.id);
-      const destinationListRef = doc(db, `users/${auth.currentUser.uid}/lists`, destinationList.id);
-  
+      const sourceList = lists.find((list) => list.id === source.droppableId);
+      const destinationList = lists.find((list) => list.id === destination.droppableId);
+
       if (sourceList === destinationList) {
-        await updateDoc(sourceListRef, {
-          cards: sourceCardOrder
+        const newCardOrder = Array.from(sourceList.cards);
+        const [removed] = newCardOrder.splice(source.index, 1);
+        newCardOrder.splice(destination.index, 0, removed);
+
+        const listRef = doc(db, `users/${auth.currentUser.uid}/lists`, sourceList.id);
+        await updateDoc(listRef, {
+          cards: newCardOrder,
         });
-        sourceList.cards = sourceCardOrder;
+
+        sourceList.cards = newCardOrder;
       } else {
+        const sourceCardOrder = Array.from(sourceList.cards);
+        const [removed] = sourceCardOrder.splice(source.index, 1);
+        const destinationCardOrder = Array.from(destinationList.cards);
+        destinationCardOrder.splice(destination.index, 0, removed);
+
+        const sourceListRef = doc(db, `users/${auth.currentUser.uid}/lists`, sourceList.id);
+        const destinationListRef = doc(db, `users/${auth.currentUser.uid}/lists`, destinationList.id);
+
         await Promise.all([
           updateDoc(sourceListRef, {
-            cards: sourceCardOrder
+            cards: sourceCardOrder,
           }),
           updateDoc(destinationListRef, {
-            cards: destinationCardOrder
-          })
+            cards: destinationCardOrder,
+          }),
         ]);
+
         sourceList.cards = sourceCardOrder;
         destinationList.cards = destinationCardOrder;
       }
-  
       const newListOrder = [...lists];
-      const sourceListIndex = newListOrder.findIndex(list => list.id === sourceList.id);
-      const destinationListIndex = newListOrder.findIndex(list => list.id === destinationList.id);
+      const sourceListIndex = newListOrder.findIndex((list) => list.id === sourceList.id);
+      const destinationListIndex = newListOrder.findIndex((list) => list.id === destinationList.id);
       newListOrder[sourceListIndex] = sourceList;
       newListOrder[destinationListIndex] = destinationList;
       setLists(newListOrder);
-  
-      console.log({
-        'sourceList:': sourceList,
-        'desList:': destinationList
-      });
-  
     }
   }
 
-  console.log(lists);
   return (
     <div className='board'>
       <div className="container">
